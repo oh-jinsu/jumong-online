@@ -8,6 +8,14 @@ public class Body : KinematicBody
     [Export]
     private float sensitiveness = 4f;
 
+    [Export]
+    private float gravity = 0.5f;
+
+    [Export]
+    private float maxAcceleration = 9f;
+
+    private float acceleration = 0f;
+
     private Vector3 direction = Vector3.Zero;
 
     public override void _Input(InputEvent @event)
@@ -52,8 +60,19 @@ public class Body : KinematicBody
 
     public override void _PhysicsProcess(float delta)
     {
-        var vector = direction.Rotated(Vector3.Up, Rotation.y) * speed * delta;
+        if (!IsOnFloor())
+        {
+            acceleration = Mathf.Min(acceleration + this.gravity, maxAcceleration);
+        }
+        else
+        {
+            acceleration = this.gravity;
+        }
 
-        MoveAndCollide(vector);
+        var gravity = new Vector3(0f, -1f * acceleration, 0f);
+
+        var velocity = direction.Rotated(Vector3.Up, Rotation.y) * speed + gravity;
+
+        MoveAndSlide(velocity, Vector3.Up, true);
     }
 }
