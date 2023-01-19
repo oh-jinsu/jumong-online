@@ -11,4 +11,4 @@ script = ExtResource( 2 )
 material = ExtResource( 3 )
 
 [node name="Actor" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 1, 10, 1 )
+transform = Transform( -0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 1, 1, 1 )

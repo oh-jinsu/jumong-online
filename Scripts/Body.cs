@@ -35,8 +35,8 @@ public class Body : KinematicBody
             }
         }
 
-        if (@event is InputEventScreenTouch && !@event.IsPressed())
-        {
+        if (@event is InputEventScreenTouch touch && touch.Index == 0 && !@event.IsPressed())
+        {   
             direction = Vector3.Zero;
         }
     }
