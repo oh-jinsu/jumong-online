@@ -3,7 +3,7 @@ using Godot;
 public class Head : Camera
 {
     [Export]
-    private float velocity = 0.5f;
+    private float velocity = 0.25f;
 
     [Export]
     private float maxRotationDegreeX;
@@ -22,7 +22,7 @@ public class Head : Camera
                 return;
             }
 
-            var next = RotationDegrees + new Vector3(-1f  * velocity * drag.Relative.y, 0f, 0f);
+            var next = RotationDegrees + new Vector3(-1f * velocity * drag.Relative.y, 0f, 0f);
 
             if (next.x < minRotationDegreeX || next.x > maxRotationDegreeX)
             {

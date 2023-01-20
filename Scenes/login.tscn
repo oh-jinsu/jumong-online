@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/body_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/Login.cs" type="Script" id=2]
+
+[node name="Login" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -16.0
+script = ExtResource( 2 )
+lineEditPath = NodePath("VBoxContainer/Control2/VBoxContainer/LineEdit")
+buttonPath = NodePath("VBoxContainer/Control2/VBoxContainer/Button")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 1248.0
+margin_bottom = 688.0
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+margin_right = 1248.0
+margin_bottom = 342.0
+size_flags_vertical = 3
+
+[node name="Control2" type="Control" parent="VBoxContainer"]
+margin_top = 346.0
+margin_right = 1248.0
+margin_bottom = 688.0
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Control2"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -100.0
+margin_right = 100.0
+margin_bottom = 128.0
+custom_constants/separation = 16
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/Control2/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 56.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 1 )
+align = 1
+max_length = 8
+placeholder_text = "이름을 입력하세요."
+
+[node name="Button" type="Button" parent="VBoxContainer/Control2/VBoxContainer"]
+margin_top = 72.0
+margin_right = 200.0
+margin_bottom = 128.0
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 1 )
+text = "게임시작"

@@ -11,10 +11,17 @@ config_version=4
 [application]
 
 config/name="jumong_online"
-run/main_scene="res://Scenes/World.tscn"
+run/main_scene="res://Scenes/world.tscn"
 boot_splash/show_image=false
 boot_splash/use_filter=false
 config/icon="res://icon.png"
+
+[autoload]
+
+UdpClient="*res://Scripts/UdpClient.cs"
+HttpClient="*res://Scripts/HttpClient.cs"
+SceneManager="*res://Scripts/SceneManager.cs"
+Window="*res://Scripts/Window.cs"
 
 [display]
 
