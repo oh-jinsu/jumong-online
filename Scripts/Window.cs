@@ -20,7 +20,7 @@ public class Window : Node
         node.AddChild(dialog);
     }
 
-    public void PopupDialog(string message)
+    public void PushDialog(string message)
     {
         dialog.DialogText = message;
 

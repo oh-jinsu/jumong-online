@@ -1,5 +1,4 @@
 using Godot;
-using static Godot.GD;
 
 public class SceneManager : Node
 {
@@ -27,38 +26,23 @@ public class SceneManager : Node
         currentScene.Value = root.GetChild(root.GetChildCount() - 1);
     }
 
-    public void GoTo(Scene scene)
+    public void GoTo(string path, object arguments = null)
     {
-        CallDeferred(nameof(DeferredGoTo), scene);
+        this.arguments = arguments;
+
+        CallDeferred(nameof(DeferredGoTo), path);
     }
 
-    private void DeferredGoTo(Scene scene)
+    private void DeferredGoTo(string path)
     {
         currentScene.Value.Free();
 
-        var path = GetPath(scene);
-
-        var nextScene = (PackedScene)Load(path);
+        var nextScene = (PackedScene)GD.Load(path);
 
         currentScene.Value = nextScene.Instance();
 
         GetTree().Root.AddChild(currentScene.Value);
 
         GetTree().CurrentScene = currentScene.Value;
-    }
-
-    private static string GetPath(Scene scene)
-    {
-        switch (scene)
-        {
-            case Scene.Splash:
-                return "res://Scenes/splash.tscn";
-            case Scene.Login:
-                return "res://Scenes/login.tscn";
-            case Scene.World:
-                return "res://Scenes/world.tscn";
-            default:
-                throw new System.Exception("Could not get the path");
-        }
     }
 }

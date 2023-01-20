@@ -60,22 +60,13 @@ public class Login : MarginContainer
 
             var result = await httpClient.PostAsync(uri, body);
 
-            if (result is Ok<HttpClient.Response> ok)
+            if (result is Ok<HttpClient.Response> ok && ok.value.statusCode <= 500)
             {
-                if (ok.value.statusCode > 500)
-                {
-                    window.PopupDialog("예기치 못한 오류입니다.");
-
-                    button.Disabled = false;
-
-                    return;
-                }
-
-                if (ok.value.statusCode != 200)
+                if (ok.value.statusCode != 201)
                 {
                     var json = Deserializer.FromJson<ExceptionResponse>(ok.value.text);
 
-                    window.PopupDialog(json.message);
+                    window.PushDialog(json.message);
 
                     button.Disabled = false;
 
@@ -85,9 +76,20 @@ public class Login : MarginContainer
                 {
                     var json = Deserializer.FromJson<AuthResponse>(ok.value.text);
 
-                    window.PopupDialog(json.token);
+                    var arguments = new Scene.WorldArguments
+                    {
+                        token = json.token,
+                    };
+
+                    AutoLoad.Of(this).SceneManager.GoTo(Scene.World, arguments);
+
+                    return;
                 }
             }
+
+            window.PushDialog("예기치 못한 오류입니다.");
+
+            button.Disabled = false;
         }).Start();
     }
 

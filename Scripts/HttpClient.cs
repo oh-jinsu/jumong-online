@@ -117,9 +117,7 @@ public class HttpClient : Node
             client.Poll();
         }
 
-        var text = Encoding.UTF8.GetString(buffer.ToArray());
-
-        var response = new Response(client.GetResponseCode(), text);
+        var response = new Response(client.GetResponseCode(), buffer.ToArray().GetStringFromUTF8());
 
         return new Ok<Response>(response);
     }
