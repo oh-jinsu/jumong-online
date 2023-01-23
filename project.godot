@@ -19,6 +19,7 @@ config/icon="res://icon.png"
 [autoload]
 
 UdpClient="*res://Scripts/UdpClient.cs"
+TcpClient="*res://Scripts/TcpClient.cs"
 HttpClient="*res://Scripts/HttpClient.cs"
 SceneManager="*res://Scripts/SceneManager.cs"
 Window="*res://Scripts/Window.cs"

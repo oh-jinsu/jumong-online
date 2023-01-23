@@ -2,16 +2,40 @@ using Godot;
 
 public class UdpClient : Node
 {
+    public delegate void Listener(IncomingPacket packet);
+
     private PacketPeerUDP peer = new PacketPeerUDP();
 
-    public override void _Ready()
+    private Listener listener;
+
+    public bool ConnectToHost()
     {
-        peer.ConnectToHost("127.0.0.1", 3001);
+        if (peer.ConnectToHost("127.0.0.1", 3000) != Error.Ok)
+        {
+            return false;
+        }
+
+        return IsConnectedToHost();
+    }
+
+    public bool IsConnectedToHost()
+    {
+        return peer.IsConnectedToHost();
+    }
+
+    public void Subscribe(Listener listener)
+    {
+        this.listener += listener;
+    }
+
+    public void Unsubscribe(Listener listener)
+    {
+        this.listener -= listener;
     }
 
     public bool Write(byte[] buffer)
     {
-        if (!peer.IsConnectedToHost())
+        if (!IsConnectedToHost())
         {
             return false;
         }
@@ -25,9 +49,16 @@ public class UdpClient : Node
     {
         while (peer.GetAvailablePacketCount() > 0)
         {
-            var packet = peer.GetPacket();
+            var buffer = peer.GetPacket();
 
-            GD.Print(packet.GetStringFromUTF8());
+            var packet = IncomingPacket.Deserialize(buffer);
+
+            listener?.Invoke(packet);
         }
+    }
+
+    public void Close()
+    {
+        peer.Close();
     }
 }

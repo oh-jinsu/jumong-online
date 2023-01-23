@@ -60,7 +60,7 @@ public class Login : MarginContainer
 
             var result = await httpClient.PostAsync(uri, body);
 
-            if (result is Ok<HttpClient.Response> ok && ok.value.statusCode <= 500)
+            if (result is Ok<HttpClient.Response> ok && ok.value.statusCode < 500)
             {
                 if (ok.value.statusCode != 201)
                 {

@@ -38,6 +38,14 @@ public class AutoLoad
         }
     }
 
+    public TcpClient TcpClient
+    {
+        get
+        {
+            return node.GetNode<TcpClient>("/root/TcpClient");
+        }
+    }
+
     public HttpClient HttpClient
     {
         get
