@@ -1,16 +1,8 @@
 using Godot;
-using System.Collections.Generic;
 
 public class SceneManager : Node
 {
-    private class Stackable
-    {
-        public string path;
-
-        public object arguments;
-    }
-
-    private Stack<Stackable> stack = new();
+    private object arguments;
 
     private MutableObservable<Node> currentScene = new();
 
@@ -24,7 +16,7 @@ public class SceneManager : Node
 
     public T GetArguments<T>()
     {
-        return (T)stack.Peek().arguments;
+        return (T)arguments;
     }
 
     public override void _Ready()
@@ -32,34 +24,11 @@ public class SceneManager : Node
         var root = GetTree().Root;
 
         currentScene.Value = root.GetChild(root.GetChildCount() - 1);
-
-        stack.Push(new Stackable
-        {
-            path = Scene.Login,
-        });
-    }
-
-    public void GoBack()
-    {
-        if (stack.Count == 0)
-        {
-            return;
-        }
-
-        stack.Pop();
-
-        var item = stack.Pop();
-
-        CallDeferred(nameof(DeferredGoTo), item.path);
     }
 
     public void GoTo(string path, object arguments = null)
     {
-        stack.Push(new Stackable
-        {
-            path = path,
-            arguments = arguments,
-        });
+        this.arguments = arguments;
 
         CallDeferred(nameof(DeferredGoTo), path);
     }

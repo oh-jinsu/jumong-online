@@ -68,17 +68,12 @@ public class BodyNotifier : Node
             return;
         }
 
-        var buffer = new byte[14];
+        var packet = new OutgoingPacket.UpdateOrigin
+        {
+            origin = origin
+        };
 
-        Buffer.BlockCopy(new byte[] { 2, 0 }, 0, buffer, 0, 2);
-
-        Buffer.BlockCopy(BitConverter.GetBytes(origin.x), 0, buffer, 2, 4);
-
-        Buffer.BlockCopy(BitConverter.GetBytes(origin.y), 0, buffer, 6, 4);
-
-        Buffer.BlockCopy(BitConverter.GetBytes(origin.z), 0, buffer, 10, 4);
-
-        udpClient.Write(buffer);
+        udpClient.Write(packet.Serialize());
     }
 
     private void NotifyRotationY(float y)
@@ -88,12 +83,11 @@ public class BodyNotifier : Node
             return;
         }
 
-        var buffer = new byte[6];
+        var packet = new OutgoingPacket.UpdateRotation
+        {
+            y = y
+        };
 
-        Buffer.BlockCopy(new byte[] { 3, 0 }, 0, buffer, 0, 2);
-
-        Buffer.BlockCopy(BitConverter.GetBytes(y), 0, buffer, 2, 4);
-
-        udpClient.Write(buffer);
+        udpClient.Write(packet.Serialize());
     }
 }

@@ -31,9 +31,9 @@ public class Chunk : MeshInstance
 
         var mesh = new ArrayMesh();
 
-        for (int x = 0; x < width * size; x += size)
+        for (int x = Mathf.FloorToInt(width * -0.5f * size); x < width * size * 0.5f; x += size)
         {
-            for (int z = 0; z < height * size; z += size)
+            for (int z = Mathf.FloorToInt(height * -0.5f * size); z < height * size * 0.5f; z += size)
             {
                 var y = 0f;
 

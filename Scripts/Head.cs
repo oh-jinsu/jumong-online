@@ -6,10 +6,10 @@ public class Head : Camera
     private float velocity = 0.25f;
 
     [Export]
-    private float maxRotationDegreeX;
+    private float maxRotationDegreeX = 90;
 
     [Export]
-    private float minRotationDegreeX;
+    private float minRotationDegreeX = -60;
 
     public override void _Input(InputEvent @event)
     {

@@ -26,8 +26,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0 )
 fov = 55.0
 far = 1024.0
 script = ExtResource( 2 )
-maxRotationDegreeX = 90.0
-minRotationDegreeX = -60.0
 
 [node name="BodyNotifier" type="Node" parent="."]
 script = ExtResource( 3 )

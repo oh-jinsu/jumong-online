@@ -3,9 +3,9 @@ using System;
 
 public class TcpClient : Node
 {
-    public delegate void Listener(IncomingPacket packet);
+    public delegate void IncomingListener(IncomingPacket packet);
 
-    private Listener listener;
+    private IncomingListener listener;
 
     private StreamPeerTCP peer = new StreamPeerTCP();
 
@@ -34,12 +34,12 @@ public class TcpClient : Node
         return peer.GetStatus() == StreamPeerTCP.Status.Connected;
     }
 
-    public void Subscribe(Listener listener)
+    public void Subscribe(IncomingListener listener)
     {
         this.listener += listener;
     }
 
-    public void Unsubscribe(Listener listener)
+    public void Unsubscribe(IncomingListener listener)
     {
         this.listener -= listener;
     }
