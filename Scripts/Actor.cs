@@ -2,16 +2,22 @@ using Godot;
 
 public class Actor : KinematicBody
 {
+    private TcpClient tcpClient;
+
     private UdpClient udpClient;
 
     public override void _Ready()
     {
+        tcpClient = AutoLoad.Of(this).TcpClient;
+
+        tcpClient.Subscribe(TcpIncomingListener);
+
         udpClient = AutoLoad.Of(this).UdpClient;
 
-        udpClient.Subscribe(TcpIncomingListener);
+        udpClient.Subscribe(UdpIncomingListener);
     }
 
-    private void TcpIncomingListener(IncomingPacket packet)
+    private void UdpIncomingListener(IncomingPacket packet)
     {
         if (packet is IncomingPacket.UpdateOrigin updateOrigin)
         {
@@ -19,7 +25,7 @@ public class Actor : KinematicBody
             {
                 return;
             }
-            GD.Print(updateOrigin.origin);
+
             Translation = updateOrigin.origin;
         }
 
@@ -32,6 +38,10 @@ public class Actor : KinematicBody
 
             RotationDegrees = new Vector3(RotationDegrees.x, updateRotation.y, RotationDegrees.z);
         }
+    }
+
+    private void TcpIncomingListener(IncomingPacket packet)
+    {
 
         if (packet is IncomingPacket.GoodBye goodBye)
         {
@@ -46,6 +56,8 @@ public class Actor : KinematicBody
 
     public override void _ExitTree()
     {
-        udpClient.Unsubscribe(TcpIncomingListener);
+        tcpClient.Unsubscribe(TcpIncomingListener);
+
+        udpClient.Unsubscribe(UdpIncomingListener);
     }
 }
