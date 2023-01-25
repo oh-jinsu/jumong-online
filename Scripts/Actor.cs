@@ -15,6 +15,12 @@ public class Actor : KinematicBody
         udpClient = AutoLoad.Of(this).UdpClient;
 
         udpClient.Subscribe(UdpIncomingListener);
+
+        var animationPlayer = GetNode<AnimationPlayer>("actor/AnimationPlayer");
+
+        animationPlayer.GetAnimation("Armature|mixamocom|Layer0").Loop = true;
+
+        animationPlayer.Play("Armature|mixamocom|Layer0");
     }
 
     private void UdpIncomingListener(IncomingPacket packet)
